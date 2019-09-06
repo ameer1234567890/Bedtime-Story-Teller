@@ -80,7 +80,7 @@ const newStoryNum = (conv) => {
   return newStory;
 };
 
-// Handle 'Default Welcome Intent'.
+// Handle 'Default Welcome Intent'
 app.intent('Default Welcome Intent', (conv) => {
   if (conv.user.verification === 'VERIFIED' && !conv.user.storage.uid) {
     let uid = uuidv4();
@@ -91,12 +91,12 @@ app.intent('Default Welcome Intent', (conv) => {
     conv.user.storage.uid = uid;
   }
   let random = Math.floor(Math.random() * welcomeMessages.length);
-  conv.ask(welcomeMessages[random].text + ' Please say, tell me a story, to start listening stories.');
+  conv.ask(welcomeMessages[random].text + ' Please say "tell me a story" to start listening stories.');
   conv.ask(new Suggestions('Tell me a story', 'Tell me lot of stories', 'No thanks'));
 });
 
 // When 'Tell me a story' is said after the welcome intent or when 'yes' is answered
-app.intent('Default Welcome Intent - start', (conv) => {
+app.intent(['Default Welcome Intent - start', 'story intent'], (conv) => {
   tellStory(conv);
 });
 

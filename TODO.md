@@ -2,5 +2,5 @@
 - [x] Continuous story reading
 - [x] Listen to new stories functionality
 - [x] Collect user ID (via firestore?)
-- [ ] Continue current story when 'continue' is said (probably via 'story - continue' intent?)
 - [ ] Collect and save user email addresses (via firestore?) for mail merge, when new stories are published
+- [ ] Continue current story when 'continue' is said (probably via 'story - continue' intent?)
