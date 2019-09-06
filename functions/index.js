@@ -8,6 +8,10 @@ const {
 const functions = require('firebase-functions');
 const storiesData = require('./stories.js');
 const app = dialogflow({debug: false});
+const admin = require('firebase-admin');
+admin.initializeApp();
+const db = admin.firestore();
+const uuidv4 = require('uuid/v4');
 
 // Some alternative welcome messages
 const welcomeMessages = [
@@ -78,6 +82,14 @@ const newStoryNum = (conv) => {
 
 // Handle 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
+  if (conv.user.verification === 'VERIFIED' && !conv.user.storage.uid) {
+    let uid = uuidv4();
+    let date = new Date();
+    db.collection('users').doc(uid).set({ registered: date })
+    .then(() => { return console.log('New user ID generated!'); })
+    .catch((error) => { return console.error('Error writing new user ID: ', error); });
+    conv.user.storage.uid = uid;
+  }
   let random = Math.floor(Math.random() * welcomeMessages.length);
   conv.ask(welcomeMessages[random].text + ' Please say, tell me a story, to start listening stories.');
   conv.ask(new Suggestions('Tell me a story', 'Tell me lot of stories', 'No thanks'));
