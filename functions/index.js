@@ -96,7 +96,7 @@ app.intent('Default Welcome Intent', (conv) => {
 });
 
 // When 'Tell me a story' is said after the welcome intent or when 'yes' is answered
-app.intent(['Default Welcome Intent - start', 'story intent'], (conv) => {
+app.intent(['Default Welcome Intent - start', 'story intent', 'stories intent - yes'], (conv) => {
   tellStory(conv);
 });
 
