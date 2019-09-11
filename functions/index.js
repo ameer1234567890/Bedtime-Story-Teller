@@ -1,4 +1,6 @@
 'use strict';
+/* jshint esversion: 6 */
+/* jshint node: true */
 
 const {
   dialogflow,
@@ -31,7 +33,7 @@ const newStories = [
 // Random number generator for stories
 const genRandom = () => {
   return Math.floor(Math.random() * storiesData.length);
-}
+};
 
 // Generate a random story number
 const randomStoryNum = (conv) => {
@@ -46,7 +48,9 @@ const randomStoryNum = (conv) => {
     });
     while (found) {
       random = genRandom();
+      /* jshint -W083 */
       found = listenedStories.find((element) => { // eslint-disable-line no-loop-func
+      /* jshint +W083 */
         return element === random;
       });
     }
