@@ -5,6 +5,7 @@
 const {
   dialogflow,
   Suggestions,
+  MediaObject,
 } = require('actions-on-google');
 
 const functions = require('firebase-functions');
@@ -144,13 +145,17 @@ const tellStory = (conv) => {
 
 // Tell stories in continuous mode
 const tellStoriesContinuous = (conv) => {
-  let stories = '';
+  /*let stories = '';
   for (let j = 0; j < 5; j++) {
     let i = randomStoryNum(conv);
     stories += 'Story name: ' + storiesData[i].title + '! ' + storiesData[i].text + '<break time="3s"/>';
   }
-  conv.ask('<speak>' + stories + '</speak>');
-  conv.ask('Do you want to listen to another story?');
+  conv.ask('<speak>' + stories + '</speak>');*/
+  conv.ask('I am playing four stories. Say "yes" at the end if you want more stories.');
+  conv.ask(new MediaObject({
+    name: 'Four Stories',
+    url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/stories1.mp3?alt=media&token=3eddca14-fd27-4a51-8a39-4d3af4a510d9',
+  }));
   conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
 };
 
