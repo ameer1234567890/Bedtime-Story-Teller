@@ -1,0 +1,43 @@
+{
+  "id": "d765bc47-e6e4-4313-87ed-f8a9caeb05fe",
+  "parentId": "ca8fad7b-5cac-4b44-a77d-6c76e8365bfd",
+  "rootParentId": "ca8fad7b-5cac-4b44-a77d-6c76e8365bfd",
+  "name": "Default Welcome Intent - new",
+  "auto": true,
+  "contexts": [
+    "DefaultWelcomeIntent-followup-2",
+    "DefaultWelcomeIntent-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DefaultWelcomeIntent.DefaultWelcomeIntent-custom",
+      "affectedContexts": [
+        {
+          "name": "DefaultWelcomeIntent-new-followup",
+          "parameters": {},
+          "lifespan": 2
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}
