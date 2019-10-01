@@ -154,7 +154,7 @@ const tellStoriesContinuous = (conv) => {
   conv.ask('I am playing all stories in a continuous turn.');
   conv.ask(new MediaObject({
     name: 'Bedtime Story Teller - All Stories',
-    url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories.mp3?alt=media&token=5b3e682a-1761-4d85-a4e7-d6bc2fdf7a2f',
+    url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories.mp3?alt=media&token=2f380be7-0907-4623-86c6-d57bcc45b908',
   }));
   conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
 };
