@@ -1,11 +1,11 @@
 {
-  "description": "",
+  "description": "A kid friendly story teller, with lots of interesting stories",
   "language": "en",
   "shortDescription": "",
   "examples": "",
   "linkToDocs": "",
   "disableInteractionLogs": false,
-  "disableStackdriverLogs": true,
+  "disableStackdriverLogs": false,
   "googleAssistant": {
     "googleAssistantCompatible": true,
     "project": "",
