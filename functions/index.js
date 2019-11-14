@@ -192,7 +192,7 @@ const tellStoriesContinuous = (conv) => {
   conv.ask('I am playing all stories.');
   conv.ask(new MediaObject({
     name: 'Bedtime Story Teller - All Stories',
-    url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories.mp3?alt=media&token=2f380be7-0907-4623-86c6-d57bcc45b908',
+    url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories.mp3?alt=media&token=72007f65-69b1-4efc-bcf0-cd54989b413b',
     description: stories,
     icon: new Image({
       url: 'https://lh3.googleusercontent.com/nJMB2ZVPQgo9GYLjWfs18oajhppikyKDNIedcr0jqF_jD54i8t22i7L4VBqoDZWYjGm0KsM0F-OP=s72',
