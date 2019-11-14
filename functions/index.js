@@ -6,6 +6,7 @@ const {
   dialogflow,
   Suggestions,
   MediaObject,
+  Image,
 } = require('actions-on-google');
 
 const functions = require('firebase-functions');
@@ -22,6 +23,21 @@ const welcomeMessages = [
   {text: 'Hi! It\'s story time.',},
   {text: 'Hi! It\'s time for some stories.',},
   {text: 'Hi! let\'s get started with bedtime stories.',},
+];
+
+const fallbackMessages = [
+  {text: 'I didn\'t get that. Can you say it again?',},
+  {text: 'I missed what you said. What was that?',},
+  {text: 'Sorry, could you say that again?',},
+  {text: 'Sorry, can you say that again?',},
+  {text: 'Can you say that again?',},
+  {text: 'Sorry, I didn\'t get that. Can you rephrase?',},
+  {text: 'Sorry, what was that?',},
+  {text: 'One more time?',},
+  {text: 'What was that?',},
+  {text: 'Say that one more time?',},
+  {text: 'I didn\'t get that. Can you repeat?',},
+  {text: 'I missed that, say that again?',},
 ];
 
 // List denoting new story numbers
@@ -94,9 +110,17 @@ app.intent('Default Welcome Intent', (conv) => {
     .then(() => { return console.log('New user ID generated!'); })
     .catch((error) => { return console.error('Error writing new user ID: ', error); });
     conv.user.storage.uid = uid;
+  } else if (conv.user.verification === 'VERIFIED' && conv.user.storage.uid) {
+    let uid = conv.user.storage.uid;
+    let date = new Date();
+    db.collection('users').doc(uid).set({ last_accessed: date })
+    .then(() => { return console.log('Saved last_accessed token!'); })
+    .catch((error) => { return console.error('Error writing last_accessed token: ', error); });
+    conv.user.storage.last_accessed = date;
   }
   let random = Math.floor(Math.random() * welcomeMessages.length);
-  conv.ask(welcomeMessages[random].text + ' Please say "tell me a story" to start listening stories.');
+  conv.ask(welcomeMessages[random].text + ' Please say "tell me a story" to start listening stories. ' +
+           'You can also say "tell me lot of stories" to listen to stories without interruption');
   conv.ask(new Suggestions('Tell me a story', 'Tell me lot of stories', 'No thanks'));
 });
 
@@ -135,6 +159,21 @@ app.intent('actions_intent_NO_INPUT', (conv) => {
   }
 });
 
+// Default Fallback Intent
+app.intent('Default Fallback Intent', (conv) => {
+  const mediaStatus = conv.arguments.get('MEDIA_STATUS');
+  if (mediaStatus && mediaStatus.status === 'FINISHED') {
+    // Right after playing all stories (MediaResponse)
+    conv.ask('Hope you enjoyed the stories! Do you want to listen to another story?');
+    conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
+  } else {
+    // Default fallback (like receiving an unidentified response)
+    let random = Math.floor(Math.random() * fallbackMessages.length);
+    conv.ask(fallbackMessages[random].text);
+    conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
+  }
+});
+
 // Tell the actual story
 const tellStory = (conv) => {
   let i = randomStoryNum(conv);
@@ -145,16 +184,20 @@ const tellStory = (conv) => {
 
 // Tell stories in continuous mode
 const tellStoriesContinuous = (conv) => {
-  /*let stories = '';
+  let stories = '';
   for (let j = 0; j < 5; j++) {
     let i = randomStoryNum(conv);
     stories += 'Story name: ' + storiesData[i].title + '! ' + storiesData[i].text + '<break time="3s"/>';
   }
-  conv.ask('<speak>' + stories + '</speak>');*/
-  conv.ask('I am playing all stories in a continuous turn.');
+  conv.ask('I am playing all stories.');
   conv.ask(new MediaObject({
     name: 'Bedtime Story Teller - All Stories',
     url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories.mp3?alt=media&token=2f380be7-0907-4623-86c6-d57bcc45b908',
+    description: stories,
+    icon: new Image({
+      url: 'https://lh3.googleusercontent.com/nJMB2ZVPQgo9GYLjWfs18oajhppikyKDNIedcr0jqF_jD54i8t22i7L4VBqoDZWYjGm0KsM0F-OP=s72',
+      alt: 'Icon',
+    }),
   }));
   conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
 };
