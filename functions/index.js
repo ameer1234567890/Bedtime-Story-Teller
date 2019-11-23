@@ -25,21 +25,6 @@ const welcomeMessages = [
   {text: 'Hi! let\'s get started with bedtime stories.',},
 ];
 
-const fallbackMessages = [
-  {text: 'I didn\'t get that. Can you say it again?',},
-  {text: 'I missed what you said. What was that?',},
-  {text: 'Sorry, could you say that again?',},
-  {text: 'Sorry, can you say that again?',},
-  {text: 'Can you say that again?',},
-  {text: 'Sorry, I didn\'t get that. Can you rephrase?',},
-  {text: 'Sorry, what was that?',},
-  {text: 'One more time?',},
-  {text: 'What was that?',},
-  {text: 'Say that one more time?',},
-  {text: 'I didn\'t get that. Can you repeat?',},
-  {text: 'I missed that, say that again?',},
-];
-
 // List denoting new story numbers
 const newStories = [
   {number: 49,},
@@ -113,7 +98,7 @@ app.intent('Default Welcome Intent', (conv) => {
   } else if (conv.user.verification === 'VERIFIED' && conv.user.storage.uid) {
     let uid = conv.user.storage.uid;
     let date = new Date();
-    db.collection('users').doc(uid).set({ last_accessed: date })
+    db.collection('users').doc(uid).update({ last_accessed: date })
     .then(() => { return console.log('Saved last_accessed token!'); })
     .catch((error) => { return console.error('Error writing last_accessed token: ', error); });
     conv.user.storage.last_accessed = date;
@@ -159,17 +144,15 @@ app.intent('actions_intent_NO_INPUT', (conv) => {
   }
 });
 
-// Default Fallback Intent
-app.intent('Default Fallback Intent', (conv) => {
+// Handle media intents
+app.intent('actions_intent_MEDIA_STATUS', (conv) => {
   const mediaStatus = conv.arguments.get('MEDIA_STATUS');
   if (mediaStatus && mediaStatus.status === 'FINISHED') {
     // Right after playing all stories (MediaResponse)
     conv.ask('Hope you enjoyed the stories! Do you want to listen to another story?');
     conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
   } else {
-    // Default fallback (like receiving an unidentified response)
-    let random = Math.floor(Math.random() * fallbackMessages.length);
-    conv.ask(fallbackMessages[random].text);
+    conv.ask('Okay! Do you want to listen to another story?');
     conv.ask(new Suggestions('Yes', 'Tell me lot of stories', 'No thanks'));
   }
 });
