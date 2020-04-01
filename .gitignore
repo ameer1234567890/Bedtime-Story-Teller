@@ -1,4 +1,5 @@
 stories/*.mp3
+stories/stories.txt
 
 # Logs
 logs

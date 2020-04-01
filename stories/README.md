@@ -1,5 +1,6 @@
 ```
-rm stories.txt
+rm all_stories.mp3 stories.txt
 for f in ./*.mp3; do echo "file '$f'" >> stories.txt; done
+cat stories.txt | shuf > stories.txt
 ffmpeg -f concat -safe 0 -i stories.txt -c copy all_stories.mp3
 ```
