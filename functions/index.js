@@ -32,6 +32,20 @@ const newStories = [
   {number: 51,},
 ];
 
+// All stories in different randomizations
+const allStories = [
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_0.mp3?alt=media&token=4cafb323-91c4-48d0-8c7c-86cf0323a7a4',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_1.mp3?alt=media&token=f7172d25-aac1-46b5-bb67-8a3a086932a4',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_2.mp3?alt=media&token=44b06774-356f-490b-872b-e8dee7ae0c9d',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_3.mp3?alt=media&token=56f19b6f-0223-4073-a18a-60fae1d5034b',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_4.mp3?alt=media&token=6b2b5218-b94c-430e-9890-25e84ec7bd11',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_5.mp3?alt=media&token=74b291c2-aaae-46c4-801f-7ae182c298a5',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_6.mp3?alt=media&token=33c35278-86c8-42a5-9efc-6b21b13a05e6',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_7.mp3?alt=media&token=0915beee-864a-4e41-8b64-4f409b629d18',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_8.mp3?alt=media&token=ea225753-30cf-450b-a96a-412e59563e72',},
+  {url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories_9.mp3?alt=media&token=e9f7536f-2419-454c-bee7-0000ea50cac6',},
+];
+
 // Random number generator for stories
 const genRandom = () => {
   return Math.floor(Math.random() * storiesData.length);
@@ -172,10 +186,11 @@ const tellStoriesContinuous = (conv) => {
     let i = randomStoryNum(conv);
     stories += 'Story name: ' + storiesData[i].title + '! ' + storiesData[i].text + '<break time="3s"/>';
   }
+  let random = Math.floor(Math.random() * allStories.length);
   conv.ask('I am playing all stories.');
   conv.ask(new MediaObject({
     name: 'Bedtime Story Teller - All Stories',
-    url: 'https://firebasestorage.googleapis.com/v0/b/bedtime-story-teller-290ad.appspot.com/o/all_stories.mp3?alt=media&token=81ef8d66-11f2-432e-8748-9ee1a67f1066',
+    url: allStories[random].url,
     description: stories,
     icon: new Image({
       url: 'https://lh3.googleusercontent.com/nJMB2ZVPQgo9GYLjWfs18oajhppikyKDNIedcr0jqF_jD54i8t22i7L4VBqoDZWYjGm0KsM0F-OP=s72',
