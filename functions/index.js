@@ -15,7 +15,7 @@ const app = dialogflow({debug: false});
 const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 // Some alternative welcome messages
 const welcomeMessages = [
