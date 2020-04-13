@@ -108,6 +108,9 @@ app.intent('Default Welcome Intent', (conv) => {
     db.collection('users').doc(uid).set({ registered: date })
     .then(() => { return console.log('New user ID generated!'); })
     .catch((error) => { return console.error('Error writing new user ID: ', error); });
+    db.collection('stats').doc('index').update({ total_users: admin.firestore.FieldValue.increment(1) })
+    .then(() => { return console.log('Stats updated!'); })
+    .catch((error) => { return console.error('Error updating stats: ', error); });
     conv.user.storage.uid = uid;
   } else if (conv.user.verification === 'VERIFIED' && conv.user.storage.uid) {
     let uid = conv.user.storage.uid;
@@ -115,7 +118,21 @@ app.intent('Default Welcome Intent', (conv) => {
     db.collection('users').doc(uid).update({ last_accessed: date })
     .then(() => { return console.log('Saved last_accessed token!'); })
     .catch((error) => { return console.error('Error writing last_accessed token: ', error); });
+    let returningUser = false;
+    db.collection('users').doc(uid).get()
+    .then((doc) => {
+      if (! doc.last_accessed) {
+        returningUser = true;
+      }
+      return true;
+    })
+    .catch((error) => { return console.error('Error getting record: ', error); });
     conv.user.storage.last_accessed = date;
+    if (returningUser) {
+      db.collection('stats').doc('index').update({ returning_users: admin.firestore.FieldValue.increment(1) })
+      .then(() => { return console.log('Stats updated!'); })
+      .catch((error) => { return console.error('Error updating stats: ', error); });
+    }
   }
   let random = Math.floor(Math.random() * welcomeMessages.length);
   conv.ask(welcomeMessages[random].text + ' Please say "tell me a story" to start listening stories. ' +

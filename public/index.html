@@ -9,6 +9,8 @@
       #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
       #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
       #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message h3 { color: rgba(0,0,0,0.6); font-weight: bold; font-size: 16px; margin: 0 0 -6px; }
+      #message .stats { line-height: 24px; }
       #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
       #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
       #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
@@ -24,8 +26,16 @@
       <h2>Bedtime Story Teller</h2>
       <h1>A kid friendly story teller, with lots of interesting stories.</h1>
       <p>Bedtime Story Teller is an app that I developed specifically to meet my daughter's needs to listen to stories on a Google Home Mini, just before sleep. Stories are chosen at random ensuring not to repeat the last 10 stories. You can listen to stories one by one, or use the continuous mode where 5 stories are read at a time. Bedtime Story Teller has quite a lot of stories, and new stories are added from time to time, to ensure that the listener is always entertained.</p>
+      <h3>Statistics:</h3>
+      <p class="stats">
+        📈 Number of users: <span id="numusers">...</span><br>
+        📈 Returning of users: <span id="returningusers">...</span></p>
       <a target="_blank" href="https://assistant.google.com/services/a/uid/000000f5509a362c">Open on Assistant Directory</a>
     </div>
     <p id="load"><a href="/privacy.html">Privacy Policy</a></p>
+    <script src="/__/firebase/7.14.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.14.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script src="index.js"></script>    
   </body>
 </html>
