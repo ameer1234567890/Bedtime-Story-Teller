@@ -25,6 +25,19 @@ const welcomeMessages = [
   {text: 'Hi! let\'s get started with bedtime stories.',},
 ];
 
+// Some alternative messages for returning users
+const returningMessages = [
+  {text: 'Good to have you back.',},
+  {text: 'It\'s been some time since we last met.',},
+  {text: 'It\'s been a pleasure having you back.',},
+  {text: 'Welcome back, by the way.',},
+  {text: 'I\'ve been waiting for you to be back.',},
+  {text: 'I\'ve always wanted to have you back.',},
+  {text: 'I\'ve never wanted to have you leave me.',},
+  {text: 'I knew you would be back.',},
+  {text: 'I knew you wouldn\'t leave me.',},
+];
+
 // List denoting new story numbers
 const newStories = [
   {number: 49,},
@@ -135,8 +148,13 @@ app.intent('Default Welcome Intent', (conv) => {
     }
   }
   let random = Math.floor(Math.random() * welcomeMessages.length);
-  conv.ask(welcomeMessages[random].text + ' Please say "tell me a story" to start listening stories. ' +
-           'You can also say "tell me lot of stories" to listen to stories without interruption');
+  let welcomeMessage = welcomeMessages[random].text;
+  if (conv.user.last.seen) {
+    let random = Math.floor(Math.random() * returningMessages.length);
+    welcomeMessage = welcomeMessage + ' ' + returningMessages[random].text;
+  }
+  conv.ask(welcomeMessage + ' Please say "tell me a story" to start listening stories. ' +
+           'You can also say "tell me lot of stories" to listen to stories without interruption.');
   conv.ask(new Suggestions('Tell me a story', 'Tell me lot of stories', 'No thanks'));
 });
 
