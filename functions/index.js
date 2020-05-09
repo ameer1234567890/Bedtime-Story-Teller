@@ -31,11 +31,6 @@ const returningMessages = [
   {text: 'It\'s been some time since we last met.',},
   {text: 'It\'s been a pleasure having you back.',},
   {text: 'Welcome back, by the way.',},
-  {text: 'I\'ve been waiting for you to be back.',},
-  {text: 'I\'ve always wanted to have you back.',},
-  {text: 'I\'ve never wanted to have you leave me.',},
-  {text: 'I knew you would be back.',},
-  {text: 'I knew you wouldn\'t leave me.',},
 ];
 
 // List denoting new story numbers
